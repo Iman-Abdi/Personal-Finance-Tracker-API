@@ -85,6 +85,8 @@ app.get("/", (req, res) => {
   });
 });
 
+app.set('trust proxy', 1);
+
 app.use(notFound);
 app.use(errorHandler);
 
