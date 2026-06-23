@@ -22,15 +22,8 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-
-if (process.env.NODE_ENV === "production") {
-  const __dirname = path.dirname(fileURLToPath(import.meta.url));
-  app.use(express.static(path.join(__dirname, "../frontend/dist")));
-  app.get("/*", (req, res) => {
-    res.sendFile(path.join(__dirname, "../frontend/dist", "index.html"));
-  });
-}
-
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const clientDistPath = path.resolve(__dirname, "../frontend/dist");
 
 // Rate limiting
 const limiter = rateLimit({
@@ -90,12 +83,19 @@ app.use("/api/admin", adminRoutes);
 // Swagger docs
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-// Root route
-app.get("/", (req, res) => {
-  res.json({
-    message: "Finance Tracker API Running",
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(clientDistPath));
+  app.get(/.*/, (req, res) => {
+    res.sendFile(path.join(clientDistPath, "index.html"));
   });
-});
+} else {
+  // Root route
+  app.get("/", (req, res) => {
+    res.json({
+      message: "Finance Tracker API Running",
+    });
+  });
+}
 
 // Error handling
 app.use(notFound);
