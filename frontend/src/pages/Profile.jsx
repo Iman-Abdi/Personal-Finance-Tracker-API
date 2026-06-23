@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 
 import DashboardLayout from "../components/layout/DashboardLayout";
 
@@ -8,7 +9,11 @@ import { uploadProfilePicture } from "../api/uploadApi";
 
 import { Button } from "@/components/ui/button";
 
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@/components/ui/avatar";
 
 import {
   Card,
@@ -21,6 +26,9 @@ import {
 import { toast } from "sonner";
 
 export default function Profile() {
+  const queryClient =
+    useQueryClient();
+
   const {
     data: user,
     isLoading,
@@ -54,9 +62,20 @@ export default function Profile() {
           file
         );
 
-        await uploadProfilePicture(
+        const data = await uploadProfilePicture(
           formData
         );
+
+        queryClient.setQueryData(
+          ["profile"],
+          data.user
+        );
+
+        await queryClient.invalidateQueries({
+          queryKey: ["profile"],
+        });
+
+        setFile(null);
 
         toast.success(
           "Profile picture updated"
@@ -109,6 +128,11 @@ export default function Profile() {
           <CardContent>
           <div className="flex items-center gap-4">
             <Avatar className="h-16 w-16">
+              <AvatarImage
+                src={user?.profilePicture}
+                alt={user?.name || "Profile picture"}
+              />
+
               <AvatarFallback className="text-xl font-semibold">
                 {user?.name
                   ?.charAt(0)

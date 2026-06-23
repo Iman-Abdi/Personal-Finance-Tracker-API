@@ -8,6 +8,7 @@ import {
 import {
   Avatar,
   AvatarFallback,
+  AvatarImage,
 } from "@/components/ui/avatar";
 
 import {
@@ -43,6 +44,11 @@ export default function UserMenu() {
     <DropdownMenu>
       <DropdownMenuTrigger>
         <Avatar className="ring-2 ring-white shadow-sm">
+          <AvatarImage
+            src={user?.profilePicture}
+            alt={user?.name || "Profile picture"}
+          />
+
           <AvatarFallback>
             {user?.name?.charAt(0)?.toUpperCase() || "U"}
           </AvatarFallback>
