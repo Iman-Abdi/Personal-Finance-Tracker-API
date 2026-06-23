@@ -23,18 +23,14 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Production: serve frontend build
 if (process.env.NODE_ENV === "production") {
   const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
-  app.use(express.static(path.join(__dirname, "frontend", "dist")));
-
-  // Catch-all route for SPA fallback
-  app.use((req, res) => {
-    res.sendFile(path.join(__dirname, 'frontend', 'dist', 'index.html'));
-
+  app.use(express.static(path.join(__dirname, "../frontend/dist")));
+  app.get("/*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../frontend/dist", "index.html"));
   });
 }
+
 
 // Rate limiting
 const limiter = rateLimit({
