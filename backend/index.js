@@ -18,21 +18,31 @@ import categoryRoutes from "./routes/categoryRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
 import uploadRoutes from "./routes/uploadRoutes.js";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-dotenv.config({ path: path.resolve(__dirname, "..", ".env") });
+dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+// Production: serve frontend build
+if (process.env.NODE_ENV === "production") {
+  const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+  app.use(express.static(path.join(__dirname, "frontend", "dist")));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
+  });
+}
+
+// Rate limiting
 const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 100,
+  windowMs: 60 * 1000, // 1 minute
+  max: 100,            // limit each IP to 100 requests per windowMs
   standardHeaders: true,
   legacyHeaders: false,
 });
 
+// Swagger setup
 const swaggerOptions = {
   definition: {
     openapi: "3.0.0",
@@ -44,9 +54,7 @@ const swaggerOptions = {
     },
     servers: [
       {
-        url:
-          process.env.RENDER_URL ||
-          `http://localhost:${PORT}`,
+        url: process.env.RENDER_URL || `http://localhost:${PORT}`,
       },
     ],
     components: {
@@ -64,35 +72,38 @@ const swaggerOptions = {
 
 const swaggerSpec = swaggerJsdoc(swaggerOptions);
 
+// Connect to MongoDB
 connectDB();
 
+// Middleware
 app.use(cors());
 app.use(helmet());
 app.use(limiter);
 app.use(express.json());
 app.use(logger);
 
+// Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/transactions", transactionRoutes);
 app.use("/api/upload", uploadRoutes);
 app.use("/api/categories", categoryRoutes);
 app.use("/api/admin", adminRoutes);
 
-app.use(
-  "/docs",
-  swaggerUi.serve,
-  swaggerUi.setup(swaggerSpec)
-);
+// Swagger docs
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
+// Root route
 app.get("/", (req, res) => {
   res.json({
     message: "Finance Tracker API Running",
   });
 });
 
+// Error handling
 app.use(notFound);
 app.use(errorHandler);
 
+// Start server
 app.listen(PORT, () => {
   console.log(`Server Running On Port ${PORT}`);
 });
