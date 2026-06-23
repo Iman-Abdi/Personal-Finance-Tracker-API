@@ -1,11 +1,11 @@
-# 📊 Personal Finance Tracker
+# Personal Finance Tracker
 
-A modern Mern‑stack web application for tracking income, expenses, categories, and uploads — built with **React (Vite)**, **Node.js**, **MongoDB Atlas**, and **Tailwind CSS**.  
+A modern Mern‑stack web application for tracking income, expenses, categories, and uploads, built with **React (Vite)**, **Node.js**, **MongoDB Atlas**, and **Tailwind CSS**.  
 Deployed live on Render: [Finance Tracker](https://personal-finance-tracker-api-rzyi.onrender.com)
 
 ---
 
-## 🚀 Tech Stack
+## Tech Stack
 - **Frontend:** React + Vite + Tailwind CSS
 - **Backend:** Node.js + Express
 - **Database:** MongoDB Atlas
@@ -13,24 +13,24 @@ Deployed live on Render: [Finance Tracker](https://personal-finance-tracker-api-
 
 ---
 
-## 🖼️ Screenshots
+## Screenshots
+
+### Register Page
+![Login Screenshot](/screenshots/Register.png)
 
 ### Login Page
-![Login Screenshot](./screenshots/Register.png)
+![Login Screenshot](/screenshots/Login.png)
 
-### 🔑 Login Page
-![Login Screenshot](./screenshots/Login.png)
+### Dashboard
+![Dashboard Screenshot](/screenshots/Dashboard.png)
 
-### 📊 Dashboard
-![Dashboard Screenshot](./screenshots/Dashboard.png)
+### Transactions
+![Transactions Screenshot](/screenshots/Transactions.png)
 
-### 💸 Transactions
-![Transactions Screenshot](./screenshots/Transactions.png)
+### Summary
+![Summary Screenshot](/screenshots/Summary.png)
 
-### 💸 Transactions
-![Summary Screenshot](./screenshots/Summary.png)
-
-### 💸 Transactions
-![Profile Screenshot](./screenshots/Profile.png)
+### Profile
+![Profile Screenshot](/Screenshots/Profile.png)
 
 
