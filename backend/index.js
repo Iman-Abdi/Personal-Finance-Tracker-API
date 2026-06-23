@@ -68,7 +68,15 @@ connectDB();
 
 // Middleware
 app.use(cors());
-app.use(helmet());
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        "img-src": ["'self'", "data:", "https://res.cloudinary.com"],
+      },
+    },
+  })
+);
 app.use(limiter);
 app.use(express.json());
 app.use(logger);
