@@ -16,19 +16,19 @@ Deployed live on Render: [Finance Tracker](https://personal-finance-tracker-api-
 ## Screenshots
 
 ### Register Page
-![Login Screenshot](/screenshots/Register.png)
+![Login Screenshot](/Screenshots/Register.png)
 
 ### Login Page
-![Login Screenshot](/screenshots/Login.png)
+![Login Screenshot](/Screenshots/Login.png)
 
 ### Dashboard
-![Dashboard Screenshot](/screenshots/Dashboard.png)
+![Dashboard Screenshot](/Screenshots/Dashboard.png)
 
 ### Transactions
-![Transactions Screenshot](/screenshots/Transactions.png)
+![Transactions Screenshot](/Screenshots/Transactions.png)
 
 ### Summary
-![Summary Screenshot](/screenshots/Summary.png)
+![Summary Screenshot](/Screenshots/Summary.png)
 
 ### Profile
 ![Profile Screenshot](/Screenshots/Profile.png)
